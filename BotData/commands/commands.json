@@ -1,0 +1,411 @@
+{
+  "command": [
+    {
+      "name": "help",
+      "actions": [
+        {
+          "name": "help menu",
+          "category": "Message",
+          "type": "Send Embed",
+          "fields": [
+            {
+              "name": ";ban [user] [reason]",
+              "value": "bans a user",
+              "inline": "true"
+            },
+            {
+              "name": ";kick [user] [reason]",
+              "value": "kicks a user",
+              "inline": "true"
+            },
+            {
+              "name": ";purge [amount of messages]",
+              "value": "deletes a selected amount of messages up to 100",
+              "inline": "true"
+            },
+            {
+              "name": ";help",
+              "value": "Brings up this menu",
+              "inline": "true"
+            },
+            {
+              "name": "link",
+              "value": "gets pet sim x private server link",
+              "inline": "true"
+            }
+          ],
+          "messageActionRows": [],
+          "channelname": "${dbsVars.CommandChannel.id}",
+          "color": "FF1800",
+          "title": "Help Menu",
+          "url": "",
+          "authorname": "",
+          "authorimageurl": "${dbsVars.CommandAuthor.user.avatarURL}",
+          "authorlink": "",
+          "description": "this is the help menu: menu will self destruct in 20 seconds",
+          "thumbnail": "",
+          "image": "",
+          "footer": "Command requested by ${dbsVars.CommandAuthor.user.tag}",
+          "timestamp": "BOOL_TRUE@@",
+          "savetovariable": "helpmenu",
+          "savetovariabletype": "temp"
+        },
+        {
+          "name": "command delete",
+          "category": "Message",
+          "type": "Delete Message",
+          "messageActionRows": [],
+          "varname": "${dbsVars.CommandMessage.id}",
+          "channelname": "${dbsVars.CommandChannel.id}"
+        },
+        {
+          "name": "helpdel",
+          "category": "Control",
+          "type": "Wait",
+          "messageActionRows": [],
+          "waitduration": "20",
+          "unit": "seconds"
+        },
+        {
+          "name": "helpdelete",
+          "category": "Message",
+          "type": "Delete Message",
+          "messageActionRows": [],
+          "varname": "${tempVars.helpmenu.id}",
+          "channelname": "${dbsVars.CommandChannel.id}"
+        }
+      ]
+    },
+    {
+      "name": "kick",
+      "actions": [
+        {
+          "name": "get user to kick",
+          "category": "Variable",
+          "type": "Get Mentioned User",
+          "messageActionRows": [],
+          "varname": "kickuser",
+          "vartype": "User",
+          "savevartype": "temp"
+        },
+        {
+          "name": "getreason",
+          "category": "Variable",
+          "type": "Store Value in Variable",
+          "messageActionRows": [],
+          "varname": "kickreason",
+          "vartype": "Text",
+          "savevartype": "temp",
+          "param": "0"
+        },
+        {
+          "name": "kickuser",
+          "category": "User Action",
+          "type": "Kick User",
+          "messageActionRows": [],
+          "user": "${tempVars.kickuser.id}",
+          "reason": "${tempVars.kickreason}"
+        },
+        {
+          "name": "command delete_1",
+          "category": "Message",
+          "type": "Delete Message",
+          "messageActionRows": [],
+          "varname": "${dbsVars.CommandMessage.id}",
+          "channelname": "${dbsVars.CommandChannel.id}"
+        },
+        {
+          "name": "kicksuccess",
+          "category": "Message",
+          "type": "Send Embed",
+          "messageActionRows": [],
+          "channelname": "${dbsVars.CommandChannel.id}",
+          "color": "FF0000",
+          "title": "Successfully kicked user",
+          "url": "",
+          "authorname": "",
+          "authorimageurl": "${dbsVars.CommandAuthor.user.avatarURL}",
+          "authorlink": "",
+          "description": "${tempVars.kickuser.user.tag} was kicked",
+          "thumbnail": "",
+          "image": "https://th.bing.com/th/id/OIP.RsBiOhRd6vPyd1CSkOenMQHaE4?w=265&h=180&c=7&r=0&o=5&dpr=1.25&pid=1.7",
+          "footer": "Command requested by ${dbsVars.CommandAuthor.user.tag}",
+          "timestamp": "BOOL_TRUE@@",
+          "savetovariable": "",
+          "savetovariabletype": "temp"
+        }
+      ]
+    },
+    {
+      "name": "ban",
+      "actions": [
+        {
+          "name": "get user to ban",
+          "category": "Variable",
+          "type": "Get Mentioned User",
+          "messageActionRows": [],
+          "varname": "user to ban",
+          "vartype": "User",
+          "savevartype": "temp"
+        },
+        {
+          "name": "get reason for ban",
+          "category": "Variable",
+          "type": "Store Value in Variable",
+          "messageActionRows": [],
+          "varname": "reason for ban",
+          "vartype": "Text",
+          "savevartype": "temp",
+          "param": "0"
+        },
+        {
+          "name": "check mod perms",
+          "category": "User Action",
+          "type": "Check User Permissions",
+          "trueActions": [
+            {
+              "name": "banuser",
+              "category": "User Action",
+              "type": "Ban User",
+              "messageActionRows": [],
+              "user": "${tempVars.user to ban.id}",
+              "reason": "ID: ${tempVars.reason for ban}",
+              "days": ""
+            },
+            {
+              "name": "command delete_2",
+              "category": "Message",
+              "type": "Delete Message",
+              "messageActionRows": [],
+              "varname": "${dbsVars.CommandMessage.id}",
+              "channelname": "${dbsVars.CommandChannel.id}"
+            },
+            {
+              "name": "kicksuccess_1",
+              "category": "Message",
+              "type": "Send Embed",
+              "messageActionRows": [],
+              "channelname": "${dbsVars.CommandChannel.id}",
+              "color": "FF0000",
+              "title": "Successfully banned user",
+              "url": "",
+              "authorname": "",
+              "authorimageurl": "${dbsVars.CommandAuthor.user.avatarURL}",
+              "authorlink": "",
+              "description": "${tempVars.user to ban.user.tag} was banned. get rekt kid",
+              "thumbnail": "",
+              "image": "https://th.bing.com/th/id/OIP.QY2Np2emqFMBnWXtc8LCHQHaEK?w=333&h=187&c=7&r=0&o=5&dpr=1.25&pid=1.7",
+              "footer": "Command requested by ${dbsVars.CommandAuthor.user.tag}",
+              "timestamp": "BOOL_TRUE@@",
+              "savetovariable": "",
+              "savetovariabletype": "temp"
+            }
+          ],
+          "falseActions": [
+            {
+              "name": "no mod perms",
+              "category": "Message",
+              "type": "Send Message",
+              "messageActionRows": [],
+              "channelname": "${dbsVars.CommandChannel.id}",
+              "messagetext": "<@${dbsVars.CommandAuthor.id}> you dont even have the perms to ban someone dumbass",
+              "savetovariable": "",
+              "savetovariabletype": "temp"
+            }
+          ],
+          "messageActionRows": [],
+          "user": "${dbsVars.CommandAuthor.id}",
+          "permissions": [
+            "KICK_MEMBERS",
+            "BAN_MEMBERS"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "purge",
+      "actions": [
+        {
+          "name": "get count",
+          "category": "Variable",
+          "type": "Store Value in Variable",
+          "messageActionRows": [],
+          "varname": "numbertopurge",
+          "vartype": "Number",
+          "savevartype": "temp",
+          "param": "1"
+        },
+        {
+          "name": "command delete_3",
+          "category": "Message",
+          "type": "Delete Message",
+          "messageActionRows": [],
+          "varname": "${dbsVars.CommandMessage.id}",
+          "channelname": "${dbsVars.CommandChannel.id}"
+        },
+        {
+          "name": "purge messages",
+          "category": "Channel Action",
+          "type": "Delete All Messages",
+          "messageActionRows": [],
+          "channelname": "${dbsVars.CommandChannel.id}",
+          "msgcount": "${tempVars.numbertopurge}"
+        },
+        {
+          "name": "success_embedded",
+          "category": "Message",
+          "type": "Send Embed",
+          "messageActionRows": [],
+          "channelname": "${dbsVars.CommandChannel.id}",
+          "color": "FFFFFF",
+          "title": "Purge success",
+          "url": "",
+          "authorname": "",
+          "authorimageurl": "${dbsVars.CommandAuthor.user.avatarURL}",
+          "authorlink": "",
+          "description": "Purged ${tempVars.numbertopurge} messages (messages over 14 days old will not be purged)",
+          "thumbnail": "",
+          "image": "",
+          "footer": "Command requested by ${dbsVars.CommandAuthor.user.tag}",
+          "timestamp": "BOOL_TRUE@@",
+          "savetovariable": "success",
+          "savetovariabletype": "temp"
+        },
+        {
+          "name": "waittodel",
+          "category": "Control",
+          "type": "Wait",
+          "messageActionRows": [],
+          "waitduration": "1",
+          "unit": "seconds"
+        },
+        {
+          "name": "Delpurgemessage",
+          "category": "Message",
+          "type": "Delete Message",
+          "messageActionRows": [],
+          "varname": "${tempVars.success.id}",
+          "channelname": "${dbsVars.CommandChannel.id}"
+        }
+      ]
+    },
+    {
+      "name": "link",
+      "actions": [
+        {
+          "name": "private server checkperms",
+          "category": "User Action",
+          "type": "Check User Permissions",
+          "trueActions": [
+            {
+              "name": "private server link",
+              "category": "Message",
+              "type": "Send Embed",
+              "messageActionRows": [],
+              "channelname": "${dbsVars.CommandChannel.id}",
+              "color": "FF0000",
+              "title": "PSX Private Server",
+              "url": "",
+              "authorname": "",
+              "authorimageurl": "${dbsVars.CommandAuthor.user.avatarURL}",
+              "authorlink": "",
+              "description": "https://www.roblox.com/games/6284583030?privateServerLinkCode=56840238250652179847202516048402\nNOTE: This is for official buisness of PSXT only. if you are found using it for personal reasons you will be banned\nFor security reasons this message will self destruct in 30 seconds",
+              "thumbnail": "${dbsVars.CommandAuthor.user.avatarURL}",
+              "image": "https://cdn.discordapp.com/icons/914220855993729044/a_5ae4a5ae46879c934c93078b0b668f44.webp",
+              "footer": "Command requested by ${dbsVars.CommandAuthor.user.tag}",
+              "timestamp": "BOOL_TRUE@@",
+              "savetovariable": "privateserver",
+              "savetovariabletype": "temp"
+            },
+            {
+              "name": "command delete_4",
+              "category": "Message",
+              "type": "Delete Message",
+              "messageActionRows": [],
+              "varname": "${dbsVars.CommandMessage.id}",
+              "channelname": "${dbsVars.CommandChannel.id}"
+            },
+            {
+              "name": "wait to del private server",
+              "category": "Control",
+              "type": "Wait",
+              "messageActionRows": [],
+              "waitduration": "30",
+              "unit": "seconds"
+            },
+            {
+              "name": "delete private server",
+              "category": "Message",
+              "type": "Delete Message",
+              "messageActionRows": [],
+              "varname": "${tempVars.privateserver.id}",
+              "channelname": "${dbsVars.CommandChannel.id}"
+            }
+          ],
+          "falseActions": [
+            {
+              "name": "private server noperms",
+              "category": "Message",
+              "type": "Send Message",
+              "messageActionRows": [],
+              "channelname": "${dbsVars.CommandChannel.id}",
+              "messagetext": "<@${dbsVars.CommandAuthor.id}> bro this is for staff only idiot. why u trying to take our private server?",
+              "savetovariable": "",
+              "savetovariabletype": "temp"
+            },
+            {
+              "name": "command delete_4_1",
+              "category": "Message",
+              "type": "Delete Message",
+              "messageActionRows": [],
+              "varname": "${dbsVars.CommandMessage.id}",
+              "channelname": "${dbsVars.CommandChannel.id}"
+            }
+          ],
+          "messageActionRows": [],
+          "user": "${dbsVars.CommandAuthor.id}",
+          "permissions": [
+            "KICK_MEMBERS",
+            "BAN_MEMBERS",
+            "MANAGE_CHANNELS",
+            "MANAGE_ROLES"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "avatar",
+      "actions": [
+        {
+          "name": "user to steal avatar",
+          "category": "Variable",
+          "type": "Get Mentioned User",
+          "messageActionRows": [],
+          "varname": "useravatarsteal",
+          "vartype": "User",
+          "savevartype": "temp"
+        },
+        {
+          "name": "User's stolen avatar",
+          "category": "Message",
+          "type": "Send Embed",
+          "messageActionRows": [],
+          "channelname": "${dbsVars.CommandChannel.id}",
+          "color": "FF0000",
+          "title": "Stole ${tempVars.useravatarsteal.user.tag} 's avatar",
+          "url": "",
+          "authorname": "",
+          "authorimageurl": "",
+          "authorlink": "",
+          "description": "",
+          "thumbnail": "",
+          "image": "${tempVars.useravatarsteal.user.avatarURL}",
+          "footer": "Command requested by ${dbsVars.CommandAuthor.user.tag}",
+          "timestamp": "BOOL_TRUE@@",
+          "savetovariable": "",
+          "savetovariabletype": "temp"
+        }
+      ]
+    }
+  ]
+}
